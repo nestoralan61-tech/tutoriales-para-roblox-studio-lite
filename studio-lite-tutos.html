@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Studio Lite Tutos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e0b24;--surface:#181440;--surface2:#221c58;--line:rgba(255,255,255,.12);
+  --text:#f1eeff;--muted:#aaa4d6;--a:#8b5cf6;--b:#2ee6c5;--c:#ff5ca8;--code:#0a0819;--onb:#06231e;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:dark;
+}
+@media (prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){
+    --bg:#f5f2ff;--surface:#ffffff;--surface2:#ece7ff;--line:rgba(40,20,120,.16);
+    --text:#1b1546;--muted:#5d5690;--a:#6d3df0;--b:#0a9c85;--c:#d6247f;--code:#1b1546;--onb:#ffffff;
+    color-scheme:light;
+  }
+}
+:root[data-theme="dark"]{color-scheme:dark}
+:root[data-theme="light"]{--bg:#f5f2ff;--surface:#ffffff;--surface2:#ece7ff;--line:rgba(40,20,120,.16);--text:#1b1546;--muted:#5d5690;--a:#6d3df0;--b:#0a9c85;--c:#d6247f;--code:#1b1546;--onb:#ffffff;color-scheme:light}
+*{box-sizing:border-box}
+html{height:100%}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"DM Sans",system-ui,sans-serif;line-height:1.55;
+  background-image:radial-gradient(60% 40% at 90% 0%,color-mix(in srgb,var(--a) 35%,transparent),transparent),radial-gradient(50% 35% at 0% 20%,color-mix(in srgb,var(--c) 18%,transparent),transparent);
+  background-repeat:no-repeat}
+h1,h2,h3{font-family:Sora,system-ui,sans-serif;line-height:1.15;margin:0}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+header.hero{padding:28px 0 12px}
+.brand{font-family:Sora,sans-serif;font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px;color:var(--muted)}
+.dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--b),var(--a));box-shadow:0 0 12px var(--b)}
+h1{font-size:clamp(34px,9vw,54px);font-weight:800;margin:22px 0 12px;letter-spacing:-.02em;
+  background:linear-gradient(100deg,var(--text) 30%,var(--b));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--muted);font-size:18px;max-width:46ch;margin:0 0 22px}
+.demo{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:stretch;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:14px;
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--a) 40%,transparent),0 18px 50px -20px var(--a)}
+.demo pre{margin:0;font:13px/1.55 ui-monospace,Menlo,Consolas,monospace;color:var(--text);min-height:7.8em;white-space:pre-wrap;overflow-wrap:anywhere}
+.demo .sw{width:64px;border-radius:14px;align-self:stretch;background:var(--b);animation:hue 4s linear infinite;box-shadow:0 0 28px -4px currentColor}
+@keyframes hue{0%{filter:hue-rotate(0)}100%{filter:hue-rotate(360deg)}}
+.tools{margin:30px 0 14px;display:flex;flex-direction:column;gap:12px}
+.search{width:100%;padding:14px 16px;border-radius:14px;border:1px solid var(--line);background:var(--surface);color:var(--text);font:inherit;font-size:16px}
+.search:focus-visible,.chip:focus-visible,summary:focus-visible,.copy:focus-visible{outline:2px solid var(--b);outline-offset:2px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.chip{flex:none;padding:9px 16px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted);font:500 15px "DM Sans",sans-serif;cursor:pointer}
+.chip[aria-pressed="true"]{color:var(--onb);background:linear-gradient(120deg,var(--b),color-mix(in srgb,var(--b) 50%,var(--a)));border-color:transparent;font-weight:700}
+.count{color:var(--muted);font-size:14px;margin:0 0 10px}
+.list{display:grid;gap:12px;padding-bottom:40px}
+details{background:var(--surface);border:1px solid var(--line);border-radius:18px;transition:border-color .2s,box-shadow .2s}
+details[open]{border-color:var(--b);box-shadow:0 0 24px -10px var(--b)}
+summary{list-style:none;cursor:pointer;padding:16px 18px;display:grid;gap:6px}
+summary::-webkit-details-marker{display:none}
+summary h3{font-size:19px;font-weight:700}
+summary p{margin:0;color:var(--muted);font-size:15px}
+.meta{display:flex;gap:10px;align-items:center;font-size:13px;color:var(--muted)}
+.tag{padding:3px 10px;border-radius:999px;font-weight:700;background:var(--surface2);color:var(--text)}
+.tag[data-c="Básico"]{color:var(--b)}.tag[data-c="Scripts"]{color:#b79bff}.tag[data-c="Interfaz"]{color:var(--c)}.tag[data-c="Ambiente"]{color:#ffd166}.tag[data-c="IA"]{color:#7fd4ff}.tag[data-c="Modelos"]{color:#ffa86b}
+.body{padding:0 18px 18px}
+.body ol{margin:0 0 14px;padding-left:20px;color:var(--text)}
+.body li{margin:6px 0}
+.codebox{position:relative}
+.codebox pre{margin:0;background:var(--code);color:#d9d3ff;border-radius:14px;padding:16px;overflow-x:auto;font:13px/1.6 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--line)}
+.copy{position:absolute;top:8px;right:8px;padding:6px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface2);color:var(--text);font:700 13px "DM Sans",sans-serif;cursor:pointer}
+.empty{padding:28px 18px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:18px}
+.vids h2{font-size:20px;margin:26px 0 12px}
+.videos{display:grid;gap:12px}
+.video{display:flex;gap:14px;align-items:center;padding:16px 18px;border-radius:18px;text-decoration:none;color:var(--text);background:var(--surface);border:1px solid var(--line);transition:border-color .2s,box-shadow .2s}
+.video:hover,.video:focus-visible{border-color:var(--c);box-shadow:0 0 24px -10px var(--c);outline:none}
+.play{flex:none;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--c),var(--a))}
+.play::before{content:"";margin-left:4px;border-left:16px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent}
+.video h3{font-size:18px}
+.video p{margin:2px 0 0;color:var(--muted);font-size:15px}
+footer{padding:0 0 36px;color:var(--muted);font-size:14px}
+@media (prefers-reduced-motion:reduce){.demo .sw{animation:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="brand"><span class="dot"></span>Studio Lite Tutos</div>
+    <h1>Crea tu juego desde el celular.</h1>
+    <p class="lead">Tutoriales cortos de Studio Lite: copia el código, pégalo y míralo funcionar.</p>
+    <div class="demo" aria-hidden="true">
+      <pre id="typed"></pre>
+      <div class="sw"></div>
+    </div>
+  </header>
+
+  <section class="vids" aria-label="Videos">
+    <h2>Videos para empezar</h2>
+    <div class="videos">
+      <a class="video" href="https://youtu.be/wMqpkYj-Bjg" target="_blank" rel="noopener noreferrer">
+        <span class="play"></span>
+        <span><h3>Curso de Roblox Studio en español</h3><p>Curso completo en YouTube, de cero a tu propio juego.</p></span>
+      </a>
+      <a class="video" href="https://youtu.be/kxPOEL63HMw" target="_blank" rel="noopener noreferrer">
+        <span class="play"></span>
+        <span><h3>Conecta Claude con Roblox Studio</h3><p>Video para usar Claude directamente con tu proyecto de Studio.</p></span>
+      </a>
+      <a class="video" href="https://youtu.be/vQNKfXOGtUQ" target="_blank" rel="noopener noreferrer">
+        <span class="play"></span>
+        <span><h3>Lo básico de Studio Lite en español</h3><p>Empieza aquí para conocer Studio Lite desde cero.</p></span>
+      </a>
+      <a class="video" href="https://youtu.be/msXD4nNbGc4" target="_blank" rel="noopener noreferrer">
+        <span class="play"></span>
+        <span><h3>Guía básica de Roblox Studio</h3><p>Lo esencial de Roblox Studio explicado paso a paso.</p></span>
+      </a>
+    </div>
+  </section>
+
+  <section class="tools" aria-label="Buscar tutoriales">
+    <input class="search" id="q" type="search" placeholder="Buscar tutorial…" autocomplete="off">
+    <div class="chips" id="chips"></div>
+  </section>
+
+  <p class="count" id="count" aria-live="polite"></p>
+  <main class="list" id="list"></main>
+
+  <footer>Más tutoriales muy pronto.</footer>
+</div>
+
+<script>
+// Para agregar un tutorial, copia un bloque { } y cambia sus textos.
+const TUTOS = [
+  { t:"Tu primer script", c:"Básico", min:3, d:"Una Part que cambia de color cada segundo.",
+    steps:["Abre tu juego en Studio Lite.","Crea un Script dentro de ServerScriptService.","Pega el código y prueba el juego."],
+    code:`local parte = Instance.new("Part")
+parte.Anchored = true
+parte.Position = Vector3.new(0, 5, 0)
+parte.Parent = workspace
+
+while true do
+	parte.BrickColor = BrickColor.random()
+	task.wait(1)
+end` },
+  { t:"Una herramienta hecha solo con script", c:"Scripts", min:6, d:"Un bate que le llega a cada jugador sin usar modelos.",
+    steps:["Crea un Script en ServerScriptService.","Pega el código: construye la Tool y se la da a cada jugador al entrar.","Cambia el print por lo que quieras que haga al golpear."],
+    code:`local Players = game:GetService("Players")
+
+local function crearBate()
+	local tool = Instance.new("Tool")
+	tool.Name = "Bate"
+
+	local handle = Instance.new("Part")
+	handle.Name = "Handle"
+	handle.Size = Vector3.new(0.5, 4, 0.5)
+	handle.Parent = tool
+
+	tool.Activated:Connect(function()
+		print("¡Golpe!")
+	end)
+	return tool
+end
+
+Players.PlayerAdded:Connect(function(plr)
+	crearBate().Parent = plr:WaitForChild("Backpack")
+end)` },
+  { t:"Interfaz que se ajusta a cualquier pantalla", c:"Interfaz", min:5, d:"Usa escala en vez de píxeles para que se vea bien en celular y PC.",
+    steps:["Crea un LocalScript dentro de StarterGui.","Pega el código: el marco ocupa 60% del ancho y 50% del alto.","Usa UDim2.fromScale siempre que puedas, no fromOffset."],
+    code:`local gui = Instance.new("ScreenGui")
+gui.ResetOnSpawn = false
+
+local marco = Instance.new("Frame")
+marco.AnchorPoint = Vector2.new(0.5, 0.5)
+marco.Position = UDim2.fromScale(0.5, 0.5)
+marco.Size = UDim2.fromScale(0.6, 0.5)
+marco.Parent = gui
+
+local esquinas = Instance.new("UICorner")
+esquinas.CornerRadius = UDim.new(0, 16)
+esquinas.Parent = marco
+
+gui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")` },
+  { t:"Detectar cuando un jugador pisa una Part", c:"Scripts", min:4, d:"La base para abrir una tienda al pisar una zona del mapa.",
+    steps:["Crea una Part en el mapa y llámala TiendaPart.","Pon este Script en ServerScriptService.","Para abrir una interfaz, dispara un RemoteEvent al cliente donde dice print."],
+    code:`local parte = workspace:WaitForChild("TiendaPart")
+local espera = {}
+
+parte.Touched:Connect(function(hit)
+	local plr = game.Players:GetPlayerFromCharacter(hit.Parent)
+	if plr and not espera[plr] then
+		espera[plr] = true
+		print(plr.Name .. " pisó la tienda")
+		task.wait(2)
+		espera[plr] = nil
+	end
+end)` },
+  { t:"Cambiar la hora y la atmósfera", c:"Ambiente", min:3, d:"Haz que tu mapa sea de noche con algo de neblina.",
+    steps:["Crea un Script en ServerScriptService.","Pega el código y prueba.","Cambia ClockTime (0 a 24) y Density (0 a 1) a tu gusto."],
+    code:`local Lighting = game:GetService("Lighting")
+Lighting.ClockTime = 20
+
+local atm = Instance.new("Atmosphere")
+atm.Density = 0.35
+atm.Parent = Lighting` },
+  { t:"Buenas interfaces con IA (con prompt)", c:"IA", min:8, d:"Pídele a Claude una interfaz moderna que se ajuste a celular y PC.",
+    steps:["Decide qué interfaz quieres (tienda, menú, panel) y si será para celular, PC o ambos.","Copia el prompt y cambia lo que está entre corchetes.","Pégalo en Claude. Te explicará el diseño primero y luego te dará el script completo.","Pega el script en un LocalScript dentro de StarterGui y prueba.","Si da error, pega el error completo en Claude y pídele que lo arregle.","Pide mejoras de una en una: más moderno, otros colores, más animaciones."],
+    code:`Actúa como diseñador de interfaces y programador experto en Roblox (Luau).
+Quiero crear [QUÉ INTERFAZ: tienda / menú / panel] para mi juego.
+
+Reglas:
+- Todo 100% por código, en un solo LocalScript
+  dentro de StarterGui, sin modelos ni assets externos.
+- Que se ajuste a cualquier pantalla: usa Scale
+  (UDim2.fromScale), UIScale y UIAspectRatioConstraint.
+  Debe verse bien en celular y en PC.
+- Estilo: [describe aquí el estilo que quieres:
+  colores, formas y sensación general].
+- Paleta de 4 a 6 colores en una tabla al inicio.
+- Animaciones suaves con TweenService al abrir,
+  cerrar y al pasar el dedo o el mouse.
+- Funciones que necesito: [lista aquí lo que debe
+  hacer]. Debe funcionar con toque y con click.
+- Si necesita datos del servidor, usa RemoteEvents
+  y valida todo en el servidor.
+- Código ordenado, con comentarios cortos en español.
+
+Antes del código, explícame en 5 líneas el diseño
+(colores, tipografía y distribución).
+Luego dame el script completo, listo para pegar.
+Si algo puede fallar en Studio Lite, avísame.` },
+  { t:"Panel de admin listo (modelo)", c:"Modelos", min:4, d:"Un modelo de admin panel para tu juego. Copia el ID y úsalo.",
+    steps:["Copia el ID de abajo.","Abre la caja de herramientas (Toolbox) en Studio Lite y busca el modelo con ese ID.","Insértalo en tu juego.","Antes de usarlo, revisa los scripts que trae: los modelos de otras personas pueden incluir código que no esperas.","Prueba que abra y revisa en sus scripts cómo se agregan los admins."],
+    code:`111176085924966` }
+];
+
+const cats = ["Todo", ...new Set(TUTOS.map(x => x.c))];
+let cat = "Todo";
+const $ = id => document.getElementById(id);
+
+function el(tag, props, ...kids){
+  const n = document.createElement(tag);
+  Object.assign(n, props || {});
+  kids.forEach(k => n.append(k));
+  return n;
+}
+
+async function copiar(texto, btn){
+  try { await navigator.clipboard.writeText(texto); }
+  catch(e){
+    const ta = el("textarea", {value:texto}); document.body.append(ta); ta.select();
+    try { document.execCommand("copy"); } catch(_){}
+    ta.remove();
+  }
+  btn.textContent = "¡Copiado!";
+  setTimeout(() => btn.textContent = "Copiar", 1500);
+}
+
+function card(x){
+  const sum = el("summary", {},
+    el("h3", {textContent:x.t}),
+    el("p", {textContent:x.d}),
+    el("div", {className:"meta"}, el("span", {className:"tag", textContent:x.c}), el("span", {textContent:x.min + " min"})));
+  sum.querySelector(".tag").dataset.c = x.c;
+  const btn = el("button", {className:"copy", type:"button", textContent:"Copiar"});
+  btn.onclick = () => copiar(x.code, btn);
+  const body = el("div", {className:"body"},
+    el("ol", {}, ...x.steps.map(s => el("li", {textContent:s}))),
+    el("div", {className:"codebox"}, el("pre", {textContent:x.code}), btn));
+  return el("details", {}, sum, body);
+}
+
+function render(){
+  const q = $("q").value.trim().toLowerCase();
+  const res = TUTOS.filter(x => (cat === "Todo" || x.c === cat) && (x.t + " " + x.d).toLowerCase().includes(q));
+  const list = $("list");
+  list.replaceChildren();
+  if (!res.length) list.append(el("div", {className:"empty", textContent:"No hay tutoriales con esa búsqueda. Prueba otra palabra o quita el filtro."}));
+  res.forEach(x => list.append(card(x)));
+  $("count").textContent = res.length + (res.length === 1 ? " tutorial" : " tutoriales");
+}
+
+cats.forEach(c => {
+  const b = el("button", {className:"chip", type:"button", textContent:c});
+  b.setAttribute("aria-pressed", c === cat);
+  b.onclick = () => {
+    cat = c;
+    document.querySelectorAll(".chip").forEach(o => o.setAttribute("aria-pressed", o === b));
+    render();
+  };
+  $("chips").append(b);
+});
+$("q").addEventListener("input", render);
+render();
+
+// Demo del héroe: el código se escribe solo una vez
+const demo = `local parte = Instance.new("Part")
+parte.Parent = workspace
+
+while true do
+  parte.BrickColor = BrickColor.random()
+  task.wait(1)
+end`;
+const out = $("typed");
+if (matchMedia("(prefers-reduced-motion:reduce)").matches) out.textContent = demo;
+else { let i = 0; (function tick(){ out.textContent = demo.slice(0, ++i); if (i < demo.length) setTimeout(tick, 28); })(); }
+</script>
+</body>
+</html>
